@@ -1,17 +1,1619 @@
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] = "Foody - Food Delivery Made Easy";
+    var categories = new[] {
+        new { Id = 1, Name = "Pizza", Icon = "🍕", Color = "#ff6b6b" },
+        new { Id = 2, Name = "Burgers", Icon = "🍔", Color = "#ffa502" },
+        new { Id = 3, Name = "Biryani", Icon = "🍛", Color = "#ff4757" },
+        new { Id = 4, Name = "Chinese", Icon = "🥡", Color = "#1e90ff" },
+        new { Id = 5, Name = "Desserts", Icon = "🍰", Color = "#ff6b9d" },
+        new { Id = 6, Name = "Healthy", Icon = "🥗", Color = "#2ed573" },
+        new { Id = 7, Name = "Beverages", Icon = "🥤", Color = "#70a1ff" },
+        new { Id = 8, Name = "Snacks", Icon = "🍿", Color = "#ffa502" }
+    };
+
+    var topRestaurants = new[] {
+        new { Id = 1, Name = "Pizza Palace", Rating = 4.8, DeliveryTime = "25-35 min", Image = "https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Pizza+Palace", Cuisine = "Italian, Pizza", Offer = "50% OFF up to ₹100" },
+        new { Id = 2, Name = "Burger Hub", Rating = 4.6, DeliveryTime = "20-30 min", Image = "https://via.placeholder.com/300x200/ffa502/ffffff?text=Burger+Hub", Cuisine = "American, Burgers", Offer = "Free Delivery" },
+        new { Id = 3, Name = "Spice Garden", Rating = 4.7, DeliveryTime = "30-40 min", Image = "https://via.placeholder.com/300x200/ff4757/ffffff?text=Spice+Garden", Cuisine = "Indian, Biryani", Offer = "₹75 OFF" },
+        new { Id = 4, Name = "Wok Express", Rating = 4.5, DeliveryTime = "25-35 min", Image = "https://via.placeholder.com/300x200/1e90ff/ffffff?text=Wok+Express", Cuisine = "Chinese, Asian", Offer = "20% OFF" },
+        new { Id = 5, Name = "Sweet Treats", Rating = 4.9, DeliveryTime = "15-25 min", Image = "https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Sweet+Treats", Cuisine = "Desserts, Bakery", Offer = "Buy 1 Get 1" },
+        new { Id = 6, Name = "Green Bowl", Rating = 4.4, DeliveryTime = "20-30 min", Image = "https://via.placeholder.com/300x200/2ed573/ffffff?text=Green+Bowl", Cuisine = "Healthy, Salads", Offer = "15% OFF" }
+    };
+
+    var topFoods = new[] {
+        new { Id = 1, Name = "Margherita Pizza", Price = "₹299", Restaurant = "Pizza Palace", Image = "https://via.placeholder.com/150x150/ff6b6b/ffffff?text=Pizza", Rating = 4.8, IsVeg = true },
+        new { Id = 2, Name = "Chicken Burger", Price = "₹199", Restaurant = "Burger Hub", Image = "https://via.placeholder.com/150x150/ffa502/ffffff?text=Burger", Rating = 4.6, IsVeg = false },
+        new { Id = 3, Name = "Chicken Biryani", Price = "₹349", Restaurant = "Spice Garden", Image = "https://via.placeholder.com/150x150/ff4757/ffffff?text=Biryani", Rating = 4.7, IsVeg = false },
+        new { Id = 4, Name = "Veg Manchurian", Price = "₹249", Restaurant = "Wok Express", Image = "https://via.placeholder.com/150x150/1e90ff/ffffff?text=Manchurian", Rating = 4.5, IsVeg = true },
+        new { Id = 5, Name = "Chocolate Cake", Price = "₹179", Restaurant = "Sweet Treats", Image = "https://via.placeholder.com/150x150/ff6b9d/ffffff?text=Cake", Rating = 4.9, IsVeg = true },
+        new { Id = 6, Name = "Grilled Salad", Price = "₹229", Restaurant = "Green Bowl", Image = "https://via.placeholder.com/150x150/2ed573/ffffff?text=Salad", Rating = 4.4, IsVeg = true }
+    };
+
+    var featuredProducts = new[] {
+        new { Id = 1, Name = "Family Combo Meal", Price = "₹899", OriginalPrice = "₹1299", Discount = "30%", Image = "https://via.placeholder.com/250x180/6c5ce7/ffffff?text=Combo+Meal", Badge = "Best Seller" },
+        new { Id = 2, Name = "Party Pack Pizza", Price = "₹699", OriginalPrice = "₹999", Discount = "30%", Image = "https://via.placeholder.com/250x180/a29bfe/ffffff?text=Pizza+Pack", Badge = "Trending" },
+        new { Id = 3, Name = "Biryani Feast", Price = "₹599", OriginalPrice = "₹849", Discount = "29%", Image = "https://via.placeholder.com/250x180/dfe6e9/333333?text=Biryani+Feast", Badge = "Popular" },
+        new { Id = 4, Name = "Dessert Box", Price = "₹399", OriginalPrice = "₹599", Discount = "33%", Image = "https://via.placeholder.com/250x180/fd79a8/ffffff?text=Dessert+Box", Badge = "New" }
+    };
+
+    var discountProducts = new[] {
+        new { Id = 1, Name = "2 Pizzas + 2 Drinks", Price = "₹499", OriginalPrice = "₹899", Discount = "44%", Image = "https://via.placeholder.com/250x180/00b894/ffffff?text=Pizza+Deal", Timer = "02:15:30" },
+        new { Id = 2, Name = "Burger + Fries Combo", Price = "₹149", OriginalPrice = "₹299", Discount = "50%", Image = "https://via.placeholder.com/250x180/fdcb6e/333333?text=Burger+Deal", Timer = "05:42:18" },
+        new { Id = 3, Name = "Biryani + Raita + Salad", Price = "₹279", OriginalPrice = "₹449", Discount = "38%", Image = "https://via.placeholder.com/250x180/e17055/ffffff?text=Biryani+Deal", Timer = "01:30:45" },
+        new { Id = 4, Name = "Chinese Platter for 2", Price = "₹549", OriginalPrice = "₹899", Discount = "39%", Image = "https://via.placeholder.com/250x180/74b9ff/ffffff?text=Chinese+Deal", Timer = "08:20:12" }
+    };
+
+    var howToOrderSteps = new[] {
+        new { Step = 1, Title = "Browse Restaurants", Icon = "bi-search", Description = "Explore top restaurants near you with ratings & reviews" },
+        new { Step = 2, Title = "Add to Cart", Icon = "bi-cart-plus", Description = "Select your favorite dishes and customize your order" },
+        new { Step = 3, Title = "Secure Checkout", Icon = "bi-credit-card", Description = "Pay safely via UPI, Card, Wallet or Cash on Delivery" },
+        new { Step = 4, Title = "Track & Enjoy", Icon = "bi-bicycle", Description = "Track your order in real-time and enjoy hot food at doorstep" }
+    };
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to AuthMvcApp</h1>
-    <p class="lead">A secure authentication system built with ASP.NET Core 8 MVC</p>
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <p>You are logged in as <strong>@User.Identity?.Name</strong></p>
-        <a asp-controller="Account" asp-action="Profile" class="btn btn-primary">View Profile</a>
-    }
-    else
-    {
-        <p>Please <a asp-controller="Account" asp-action="Login">login</a> or <a asp-controller="Account" asp-action="Register">register</a> to continue.</p>
-    }
-</div>
+@* ✅ Custom CSS Styles *@
+@section Styles {
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        :root {
+            --primary: #ff6b6b;
+            --primary-dark: #ee5a5a;
+            --secondary: #4ecdc4;
+            --dark: #2d3436;
+            --light: #f7f9fc;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa502 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0 60px;
+        }
+
+            .hero-section::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -20%;
+                width: 600px;
+                height: 600px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+                animation: float 8s ease-in-out infinite;
+            }
+
+            .hero-section::after {
+                content: '';
+                position: absolute;
+                bottom: -30%;
+                left: -10%;
+                width: 400px;
+                height: 400px;
+                background: rgba(255,255,255,0.15);
+                border-radius: 50%;
+                animation: float 10s ease-in-out infinite reverse;
+            }
+
+        @@keyframes float {
+            0%, 100%
+
+        {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-30px) rotate(10deg);
+        }
+
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        @@keyframes slideUp {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 50px;
+            padding: 8px 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            animation: slideUp 0.8s ease-out 0.4s both;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+            .search-box .form-control {
+                border: none;
+                box-shadow: none;
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+
+                .search-box .form-control:focus {
+                    box-shadow: none;
+                }
+
+            .search-box .btn {
+                border-radius: 50px;
+                padding: 15px 35px;
+                font-weight: 600;
+                background: var(--gradient);
+                border: none;
+                transition: transform 0.3s ease;
+            }
+
+                .search-box .btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+                }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+            animation: slideUp 0.8s ease-out 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* ===== SECTION STYLES ===== */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 4px;
+                background: var(--gradient);
+                border-radius: 2px;
+            }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        /* ===== CATEGORY CAROUSEL ===== */
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+            .category-card:hover {
+                transform: translateY(-8px);
+                border-color: var(--primary);
+                box-shadow: 0 15px 30px rgba(255,107,107,0.2);
+            }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.2);
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        /* ===== RESTAURANT CARD ===== */
+        .restaurant-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+            .restaurant-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            }
+
+        .restaurant-image {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+            .restaurant-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+
+        .restaurant-card:hover .restaurant-image img {
+            transform: scale(1.1);
+        }
+
+        .restaurant-offer {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .restaurant-body {
+            padding: 20px;
+        }
+
+        .restaurant-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .restaurant-cuisine {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .restaurant-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .restaurant-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .restaurant-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* ===== FOOD CARD ===== */
+        .food-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+            .food-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            }
+
+        .food-image {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+
+            .food-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .veg-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #00b894;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+            .veg-badge::after {
+                content: '';
+                width: 14px;
+                height: 14px;
+                background: #00b894;
+                border-radius: 2px;
+            }
+
+        .non-veg-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ff4757;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+            .non-veg-badge::after {
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom: 12px solid #ff4757;
+            }
+
+        .food-body {
+            padding: 15px;
+        }
+
+        .food-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        .food-restaurant {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .food-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .food-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .food-rating {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+            .food-rating i {
+                color: #ffa502;
+            }
+
+        .add-to-cart {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .food-card:hover .add-to-cart {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .add-to-cart:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+        }
+
+        /* ===== FEATURED/DISCOUNT CARD ===== */
+        .deal-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .deal-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--warning);
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .deal-image {
+            height: 160px;
+            position: relative;
+        }
+
+            .deal-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .deal-timer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .deal-body {
+            padding: 20px;
+        }
+
+        .deal-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .deal-pricing {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .deal-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .deal-original {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .deal-discount {
+            background: var(--success);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .deal-cta {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+            .deal-cta:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+            }
+
+        /* ===== HOW TO ORDER ===== */
+        .how-to-order {
+            background: var(--light);
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+        }
+
+            .step-card:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 50px;
+                right: -50%;
+                width: 100%;
+                height: 2px;
+                background: var(--gradient);
+                z-index: 0;
+            }
+
+        @@media (max-width: 768px) {
+            .step-card:not(:last-child)::after
+
+        {
+            display: none;
+        }
+
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover .step-icon {
+            transform: scale(1.1);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 3px solid var(--primary);
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .step-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* ===== APP DOWNLOAD ===== */
+        .app-download {
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .app-download::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -20%;
+                width: 600px;
+                height: 600px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+            }
+
+        .app-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .app-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .app-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .app-badges {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .app-badge {
+            background: white;
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+            .app-badge:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+
+            .app-badge i {
+                font-size: 1.8rem;
+            }
+
+        .app-badge-text small {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .app-badge-text strong {
+            font-size: 1.1rem;
+        }
+
+        .app-mockup {
+            text-align: center;
+        }
+
+            .app-mockup img {
+                max-width: 280px;
+                animation: float 6s ease-in-out infinite;
+            }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.8);
+            padding: 60px 0 30px;
+        }
+
+        .footer-brand {
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+            .footer-logo i {
+                color: var(--primary);
+            }
+
+        .footer-description {
+            max-width: 300px;
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+            .footer-social a {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+                .footer-social a:hover {
+                    background: var(--primary);
+                    transform: translateY(-3px);
+                }
+
+        .footer-title {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .footer-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 40px;
+                height: 3px;
+                background: var(--primary);
+                border-radius: 2px;
+            }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .footer-links li {
+                margin-bottom: 12px;
+            }
+
+            .footer-links a {
+                color: rgba(255,255,255,0.7);
+                text-decoration: none;
+                transition: color 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+                .footer-links a:hover {
+                    color: var(--primary);
+                }
+
+            .footer-links i {
+                font-size: 0.8rem;
+                opacity: 0.7;
+            }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 25px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+            .footer-bottom a {
+                color: var(--primary);
+                text-decoration: none;
+            }
+
+        /* ===== CAROUSEL CUSTOMIZATION ===== */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            color: var(--dark);
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .carousel-control-prev {
+            left: -20px;
+        }
+
+        .carousel-control-next {
+            right: -20px;
+        }
+
+        .carousel:hover .carousel-control-prev,
+        .carousel:hover .carousel-control-next {
+            opacity: 1;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-indicators [data-bs-target] {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            border: none;
+            margin: 0 5px;
+        }
+
+        .carousel-indicators .active {
+            background: var(--primary);
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @@media (max-width: 992px) {
+            .hero-title
+
+        {
+            font-size: 2.8rem;
+        }
+
+        .hero-stats {
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        }
+
+        @@media (max-width: 768px) {
+            .hero-title
+
+        {
+            font-size: 2.2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .search-box {
+            flex-direction: column;
+            padding: 15px;
+        }
+
+            .search-box .form-control {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .search-box .btn {
+                width: 100%;
+            }
+
+        .section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+        }
+
+        .step-card:not(:last-child)::after {
+            display: none;
+        }
+
+        .app-title {
+            font-size: 2rem;
+        }
+
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .text-gradient {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+
+            .hover-lift:hover {
+                transform: translateY(-5px);
+            }
+
+        .shadow-hover {
+            transition: box-shadow 0.3s ease;
+        }
+
+            .shadow-hover:hover {
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+            }
+
+        /* ===== LOADING ANIMATION FOR IMAGES ===== */
+        .img-loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @@keyframes loading {
+            0%
+
+        {
+            background-position: 200% 0;
+        }
+
+        100% {
+            background-position: -200% 0;
+        }
+
+        }
+    </style>
+}
+
+@* ===== HERO SECTION ===== *@
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title">
+                    Delicious Food,<br>
+                    <span class="text-gradient">Delivered to You</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Order from your favorite restaurants and get fast, contactless delivery at your doorstep. Fresh, hot, and always on time.
+                </p>
+
+                <div class="search-box">
+                    <form class="d-flex" asp-controller="Restaurant" asp-action="Search" method="get">
+                        <input type="text" name="query" class="form-control" placeholder="Search for restaurants, cuisines, or dishes..." aria-label="Search">
+                        <button class="btn" type="submit">
+                            <i class="bi bi-search me-2"></i>Search
+                        </button>
+                    </form>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Restaurants</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Happy Customers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">30 min</span>
+                        <span class="stat-label">Avg. Delivery</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="text-center">
+                    <img src="https://via.placeholder.com/500x400/ffffff/ff6b6b?text=🍕+🍔+🥗"
+                         alt="Food Delivery"
+                         class="img-fluid rounded-4 shadow-lg"
+                         style="animation: float 4s ease-in-out infinite;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ===== CATEGORY CAROUSEL ===== *@
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Browse by Category</h2>
+            <p class="section-subtitle">Explore delicious food from various categories. Find exactly what you're craving.</p>
+        </div>
+
+        <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Math.Ceiling(categories.Length / 6.0); i++)
+                {
+                    var isActive = i == 0 ? "active" : "";
+                    <div class="carousel-item @isActive">
+                        <div class="row g-4">
+                            @foreach (var category in categories.Skip(i * 6).Take(6))
+                            {
+                                <div class="col-6 col-md-4 col-lg-2">
+                                    <div class="category-card">
+                                        <span class="category-icon">@category.Icon</span>
+                                        <span class="category-name">@category.Name</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+@* ===== TOP RESTAURANTS ===== *@
+<section class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Top Restaurants Near You</h2>
+            <p class="section-subtitle">Handpicked restaurants with the best ratings and fastest delivery in your area.</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var restaurant in topRestaurants)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="@restaurant.Image" alt="@restaurant.Name" class="img-loading">
+                            <span class="restaurant-offer">@restaurant.Offer</span>
+                        </div>
+                        <div class="restaurant-body">
+                            <h3 class="restaurant-name">@restaurant.Name</h3>
+                            <p class="restaurant-cuisine">@restaurant.Cuisine</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <span>@restaurant.Rating</span>
+                                </div>
+                                <div class="restaurant-time">
+                                    <i class="bi bi-clock me-1"></i>@restaurant.DeliveryTime
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-5">
+            <a asp-controller="Restaurant" asp-action="Browse" class="btn btn-outline-primary btn-lg px-5">
+                View All Restaurants <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+@* ===== TOP FOOD ITEMS ===== *@
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Popular Food Items</h2>
+            <p class="section-subtitle">Most ordered dishes from top restaurants. Try them today!</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var food in topFoods)
+            {
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="food-card position-relative">
+                        <div class="food-image">
+                            <img src="@food.Image" alt="@food.Name" class="img-loading">
+                            @if (food.IsVeg)
+                            {
+                                <div class="veg-badge" title="Vegetarian"></div>
+                            }
+                            else
+                            {
+                                <div class="non-veg-badge" title="Non-Vegetarian"></div>
+                            }
+                        </div>
+                        <div class="food-body">
+                            <h4 class="food-name">@food.Name</h4>
+                            <p class="food-restaurant">@food.Restaurant</p>
+                            <div class="food-footer">
+                                <span class="food-price">@food.Price</span>
+                                <div class="food-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <span>@food.Rating</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="add-to-cart" title="Add to Cart">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@* ===== FEATURED PRODUCTS CAROUSEL ===== *@
+<section class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Combos</h2>
+            <p class="section-subtitle">Special meal deals curated for you. Save big on your favorite combinations.</p>
+        </div>
+
+        <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Math.Ceiling(featuredProducts.Length / 4.0); i++)
+                {
+                    var isActive = i == 0 ? "active" : "";
+                    <div class="carousel-item @isActive">
+                        <div class="row g-4">
+                            @foreach (var product in featuredProducts.Skip(i * 4).Take(4))
+                            {
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="deal-card">
+                                        @if (!string.IsNullOrEmpty(product.Badge))
+                                        {
+                                            <span class="deal-badge">@product.Badge</span>
+                                        }
+                                        <div class="deal-image">
+                                            <img src="@product.Image" alt="@product.Name" class="img-loading">
+                                        </div>
+                                        <div class="deal-body">
+                                            <h4 class="deal-name">@product.Name</h4>
+                                            <div class="deal-pricing">
+                                                <span class="deal-price">@product.Price</span>
+                                                <span class="deal-original">@product.OriginalPrice</span>
+                                                <span class="deal-discount">@product.Discount</span>
+                                            </div>
+                                            <button class="deal-cta">
+                                                <i class="bi bi-cart-plus me-1"></i> Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+@* ===== DISCOUNT PRODUCTS CAROUSEL (With Timer) ===== *@
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">⚡ Flash Deals</h2>
+            <p class="section-subtitle">Limited time offers! Grab these amazing discounts before they expire.</p>
+        </div>
+
+        <div id="discountCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Math.Ceiling(discountProducts.Length / 4.0); i++)
+                {
+                    var isActive = i == 0 ? "active" : "";
+                    <div class="carousel-item @isActive">
+                        <div class="row g-4">
+                            @foreach (var product in discountProducts.Skip(i * 4).Take(4))
+                            {
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="deal-card">
+                                        <span class="deal-badge">FLASH SALE</span>
+                                        <div class="deal-image">
+                                            <img src="@product.Image" alt="@product.Name" class="img-loading">
+                                            <div class="deal-timer">
+                                                <i class="bi bi-alarm"></i>
+                                                <span class="countdown" data-time="@product.Timer">@product.Timer</span>
+                                            </div>
+                                        </div>
+                                        <div class="deal-body">
+                                            <h4 class="deal-name">@product.Name</h4>
+                                            <div class="deal-pricing">
+                                                <span class="deal-price">@product.Price</span>
+                                                <span class="deal-original">@product.OriginalPrice</span>
+                                                <span class="deal-discount">@product.Discount</span>
+                                            </div>
+                                            <button class="deal-cta">
+                                                <i class="bi bi-bag-heart me-1"></i> Grab Deal
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#discountCarousel" data-bs-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#discountCarousel" data-bs-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+@* ===== HOW TO ORDER ===== *@
+<section class="section how-to-order">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">How to Order</h2>
+            <p class="section-subtitle">Getting your favorite food delivered is quick and easy. Just follow these simple steps.</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var step in howToOrderSteps)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="bi @step.Icon"></i>
+                            <span class="step-number">@step.Step</span>
+                        </div>
+                        <h4 class="step-title">@step.Title</h4>
+                        <p class="step-description">@step.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@* ===== DOWNLOAD MOBILE APP ===== *@
+<section class="section app-download">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 app-content">
+                <h2 class="app-title">Get the Foody App</h2>
+                <p class="app-subtitle">
+                    Download our mobile app for exclusive deals, faster checkout, and real-time order tracking. Available on iOS and Android.
+                </p>
+
+                <div class="app-badges">
+                    <a href="#" class="app-badge">
+                        <i class="bi bi-apple"></i>
+                        <div class="app-badge-text">
+                            <small>Download on the</small>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="app-badge">
+                        <i class="bi bi-google-play"></i>
+                        <div class="app-badge-text">
+                            <small>GET IT ON</small>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="mt-4 d-flex align-items-center gap-3">
+                    <span class="text-white-50">Also available on:</span>
+                    <a href="#" class="text-white text-decoration-none"><i class="bi bi-windows"></i> Web App</a>
+                </div>
+            </div>
+            <div class="col-lg-6 app-mockup">
+                <img src="https://via.placeholder.com/300x600/ffffff/ff6b6b?text=📱+Foody+App"
+                     alt="Foody Mobile App"
+                     class="img-fluid rounded-4 shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ===== FOOTER ===== *@
+<footer class="footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="bi bi-cup-hot"></i>
+                        <span>Foody</span>
+                    </div>
+                    <p class="footer-description">
+                        Your favorite food, delivered fast. Order from the best local restaurants with easy, on-demand delivery.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <h5 class="footer-title">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> About Us</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Careers</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Press</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <h5 class="footer-title">Support</h5>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Help Center</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Privacy Policy</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <h5 class="footer-title">For Restaurants</h5>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Partner With Us</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Restaurant Dashboard</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Marketing Tools</a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right"></i> Delivery Partners</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>
+                &copy; @DateTime.Now.Year Foody. All rights reserved.
+                Made with <i class="bi bi-heart-fill text-danger"></i> for food lovers.
+                <br>
+                <small>
+                    <a href="#">Cookie Policy</a> |
+                    <a href="#">Accessibility</a> |
+                    <a href="#">Sitemap</a>
+                </small>
+            </p>
+        </div>
+    </div>
+</footer>
+
+@* ===== JAVASCRIPT ===== *@
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ✅ Initialize Bootstrap Carousels with touch swipe
+            const carousels = document.querySelectorAll('.carousel');
+            carousels.forEach(carousel => {
+                new bootstrap.Carousel(carousel, {
+                    interval: 5000,
+                    wrap: true,
+                    touch: true,
+                    pause: 'hover'
+                });
+            });
+
+            // ✅ Add to Cart Button Animation
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Animation
+                    this.innerHTML = '<i class="bi bi-check-lg"></i>';
+                    this.style.background = '#00b894';
+
+                    // Show toast/notification (you can integrate with a toast library)
+                    showNotification('Added to cart!', 'success');
+
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="bi bi-plus-lg"></i>';
+                        this.style.background = '';
+                    }, 2000);
+                });
+            });
+
+            // ✅ Deal CTA Buttons
+            const dealButtons = document.querySelectorAll('.deal-cta');
+            dealButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    showNotification('Item added to cart!', 'success');
+                });
+            });
+
+            // ✅ Countdown Timer for Flash Deals
+            const countdownElements = document.querySelectorAll('.countdown');
+            countdownElements.forEach(element => {
+                const timeString = element.getAttribute('data-time');
+                if (timeString) {
+                    startCountdown(element, timeString);
+                }
+            });
+
+            // ✅ Smooth Scroll for Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // ✅ Lazy Load Images (Basic Implementation)
+            const images = document.querySelectorAll('.img-loading');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.classList.remove('img-loading');
+                });
+
+                // Fallback if image fails to load
+                img.addEventListener('error', function() {
+                    this.src = 'https://via.placeholder.com/300x200/f1f2f6/666?text=Image+Not+Available';
+                    this.classList.remove('img-loading');
+                });
+            });
+        });
+
+        // ✅ Countdown Timer Function
+        function startCountdown(element, timeString) {
+            let [hours, minutes, seconds] = timeString.split(':').map(Number);
+            let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+            const interval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(interval);
+                    element.textContent = 'Expired';
+                    element.closest('.deal-card').style.opacity = '0.6';
+                    element.closest('.deal-card').querySelector('.deal-cta').disabled = true;
+                    return;
+                }
+
+                totalSeconds--;
+                const h = Math.floor(totalSeconds / 3600);
+                const m = Math.floor((totalSeconds % 3600) / 60);
+                const s = totalSeconds % 60;
+
+                element.textContent =
+                    `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // ✅ Simple Notification Function
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `position-fixed bottom-0 end-0 p-3`;
+            notification.style.zIndex = '9999';
+
+            const alertClass = type === 'success' ? 'alert-success' :
+                              type === 'error' ? 'alert-danger' : 'alert-info';
+
+            notification.innerHTML = `
+                <div class="alert ${alertClass} alert-dismissible fade show shadow-lg" role="alert">
+                    <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : 'info-circle'} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // ✅ Intersection Observer for Scroll Animations
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe cards for animation
+            document.querySelectorAll('.category-card, .restaurant-card, .food-card, .deal-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        }
+    </script>
+}
