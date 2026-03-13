@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Foody.Utilities;
 
 namespace Foody.Models.ViewModels
 {
@@ -20,6 +21,7 @@ namespace Foody.Models.ViewModels
     {
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [Display(Name = "Full Name")]
         public string FullName { get; set; } = string.Empty;
 
         [Required]
@@ -37,6 +39,14 @@ namespace Foody.Models.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "I am a")]
+        public string UserRole { get; set; } = AppRoles.User; // Default to User
+
+        // Available roles for self-registration (Exclude DeliveryBoy - admin assigned)
+        public IEnumerable<string> AvailableRoles =>
+            new[] { AppRoles.User, AppRoles.RestaurantOwner };
     }
 
     public class ForgotPasswordViewModel

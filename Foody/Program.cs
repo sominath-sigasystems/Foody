@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Foody.Data;
 using Foody.Models;
 using Foody.Repositories;
@@ -16,7 +16,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// ✅ Manual Identity setup - more explicit, same result
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -25,9 +24,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 6;
+
+    // Optional: Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+    options.Lockout.MaxFailedAccessAttempts = 5;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();  
+.AddDefaultTokenProviders()
+.AddRoles<IdentityRole>();
 
 builder.Services.AddControllersWithViews();
 
@@ -35,7 +39,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<IRoleSeeder, RoleSeeder>();
 // Configure Cookie Authentication Security
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -49,7 +53,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var roleSeeder = scope.ServiceProvider.GetRequiredService<IRoleSeeder>();
+    await roleSeeder.SeedRolesAsync();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

@@ -12,5 +12,7 @@ namespace Foody.Repositories.Interfaces
         Task<bool> ForgotPasswordAsync(ForgotPasswordViewModel model);
         Task<IdentityResult> ResetPasswordAsync(ResetPasswordViewModel model);
         Task<ApplicationUser?> GetUserByEmailAsync(string email);
+        Task<bool> AssignRoleAsync(string email, string roleName);
+        Task<IList<string>> GetUserRolesAsync(ApplicationUser user);
     }
 }
